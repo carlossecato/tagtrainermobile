@@ -1,14 +1,10 @@
 package com.example.tagtrainermobile
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import  android.view.View
 import android.widget.*
-import androidx.core.view.get
-import java.util.ArrayList
-
+import androidx.appcompat.app.AppCompatActivity
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -19,11 +15,33 @@ class MainActivity : AppCompatActivity() {
                     " \ndescription: Todo mundo tem um jeito único de se perfumar. Mas para aproveitar todo o potencial da fragrância\n price:R$ 129,90",
             "Kaiak Urbe \nid:3 " +
                     "  \ndescription: Desodorante Colônia Kaiak Urbe Masculino - 100ml\n price:R$ 94,90")
-    var cartProducts: ArrayList<ProductActivity.Product> = ArrayList()
+
+    //var cartProducts = ArrayList<SingleCart>()
+
+    fun onClickedProducts(v: ListView, p: Int) {
+        // create a Toast with some text, to appear for a short time
+        val myToast = Toast.makeText(this@MainActivity, "Hello Toast!"+p.toString(), Toast.LENGTH_SHORT)
+        // show the Toast
+        myToast.show()
+        val intent = Intent(applicationContext, ProductActivity::class.java)
+
+        val paramsProducts = Bundle()
+        paramsProducts.putStringArray("products", productList)
+        intent.putExtras(paramsProducts)
+        val params = Bundle()
+        params.putInt("id", p)
+        intent.putExtras(params)
+
+        //intent.putParcelableArrayListExtra("cart", cartProducts)
+
+        startActivity(intent)
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 
         val table: ListView = findViewById(R.id.tableID)
         val listItems = arrayOfNulls<String>(productList.size)
@@ -38,24 +56,6 @@ class MainActivity : AppCompatActivity() {
 
         table.adapter = arrayAdapter
 
-        fun onClickedProducts(v: ListView, p: Int) {
-            // create a Toast with some text, to appear for a short time
-            val myToast = Toast.makeText(this@MainActivity, "Hello Toast!"+p.toString(), Toast.LENGTH_SHORT)
-            // show the Toast
-            myToast.show()
-            val intent = Intent(applicationContext, ProductActivity::class.java)
-            val paramsProducts = Bundle()
-            paramsProducts.putStringArray("products", productList)
-            intent.putExtras(paramsProducts)
-            val params = Bundle()
-            params.putInt("id", p)
-            intent.putExtras(params)
-            val cart = Bundle()
-            cart.putParcelableArrayList("cart", cartProducts)
-            intent.putExtras(cart)
-
-            startActivity(intent)
-        }
         table.setOnItemClickListener { parent, view, position, id ->
             onClickedProducts(table, position)
         }
