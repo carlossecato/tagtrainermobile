@@ -1,5 +1,6 @@
 package com.example.tagtrainermobile
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -19,17 +20,25 @@ class ProductActivity : AppCompatActivity() {
         return cartProducts.size <= 0
     }
 
-    fun cartNotEmpty(button: ImageButton) {
-        if(cartEmpty()) {
-            return
-        } else {
-            button.visibility = ImageButton.VISIBLE
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product)
+
+        fun cartNotEmpty(button: ImageButton) {
+            if (cartEmpty()) {
+                return
+            } else {
+                button.visibility = ImageButton.VISIBLE
+                button.setOnClickListener(object : View.OnClickListener {
+                    override fun onClick(view: View?) {
+                        val intent = Intent(applicationContext, CartActivity::class.java)
+                        startActivity(intent)
+                        //addToCart(addProdButton, productName)
+                    }
+                })
+            }
+        }
 
         val products = intent.getStringArrayExtra("products") as Array
         val idProduct =  intent.getIntExtra("id",34)
