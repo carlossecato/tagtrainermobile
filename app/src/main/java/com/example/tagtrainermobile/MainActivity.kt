@@ -2,9 +2,9 @@ package com.example.tagtrainermobile
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -19,29 +19,22 @@ class MainActivity : AppCompatActivity() {
     //var cartProducts = ArrayList<SingleCart>()
 
     fun onClickedProducts(v: ListView, p: Int) {
-        // create a Toast with some text, to appear for a short time
-        val myToast = Toast.makeText(this@MainActivity, "Hello Toast!"+p.toString(), Toast.LENGTH_SHORT)
-        // show the Toast
-        myToast.show()
         val intent = Intent(applicationContext, ProductActivity::class.java)
 
         val paramsProducts = Bundle()
         paramsProducts.putStringArray("products", productList)
         intent.putExtras(paramsProducts)
+
         val params = Bundle()
         params.putInt("id", p)
         intent.putExtras(params)
 
-        //intent.putParcelableArrayListExtra("cart", cartProducts)
-
         startActivity(intent)
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
 
         val table: ListView = findViewById(R.id.tableID)
         val listItems = arrayOfNulls<String>(productList.size)
@@ -53,13 +46,10 @@ class MainActivity : AppCompatActivity() {
         }
         val arrayAdapter: ArrayAdapter<*>
         arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems)
-
         table.adapter = arrayAdapter
-
         table.setOnItemClickListener { parent, view, position, id ->
             onClickedProducts(table, position)
         }
     }
-
 }
 

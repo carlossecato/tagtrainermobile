@@ -1,26 +1,35 @@
 package com.example.tagtrainermobile
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tagtrainermobile.models.Product
 import com.google.android.material.snackbar.Snackbar
 
 class ProductActivity : AppCompatActivity() {
 
-
     var cartProducts = Product.SingleCart.singleCartinstance
+
+    fun  cartEmpty (): Boolean {
+        return cartProducts.size <= 0
+    }
+
+    fun cartNotEmpty(button: ImageButton) {
+        if(cartEmpty()) {
+            return
+        } else {
+            button.visibility = ImageButton.VISIBLE
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product)
-
 
         val products = intent.getStringArrayExtra("products") as Array
         val idProduct =  intent.getIntExtra("id",34)
@@ -28,18 +37,15 @@ class ProductActivity : AppCompatActivity() {
         val textView = findViewById<TextView>(R.id.prodLabel) as TextView
         val productDesc = findViewById<TextView>(R.id.prodDescriptionId) as TextView
         val addProdButton = findViewById<Button>(R.id.buttonAddId) as Button
-        val intent = Intent(applicationContext, MainActivity::class.java)
+        val cartButton = findViewById(R.id.cartButtonId) as ImageButton
+            cartNotEmpty(cartButton)
 
          fun addToCart (v: View, s: String): ArrayList<Product> {
             val productAdded = Product(s,"1")
-
              cartProducts.add(productAdded)
-
              cartProducts.forEach { Log.d("oi",it.name)   }
-
-             Snackbar.make(v, "Produto Adicionado ao carrinho: " + s, Snackbar.LENGTH_LONG)
-                     .show()
-
+             Snackbar.make(v, "Produto Adicionado ao carrinho: " + s, Snackbar.LENGTH_LONG).show()
+             cartNotEmpty(cartButton)
             return cartProducts
         }
 
@@ -54,9 +60,7 @@ class ProductActivity : AppCompatActivity() {
 
            addProdButton.setOnClickListener(object : View.OnClickListener {
                override fun onClick(view: View?) {
-                   cartProducts = addToCart(addProdButton, productName)
-                   intent.putParcelableArrayListExtra("cart", cartProducts)
-
+                   addToCart(addProdButton, productName)
                }
            })
 
@@ -71,11 +75,9 @@ class ProductActivity : AppCompatActivity() {
 
            addProdButton.setOnClickListener(object : View.OnClickListener {
                override fun onClick(view: View?) {
-                   cartProducts = addToCart(addProdButton, productName)
-                   intent.putParcelableArrayListExtra("cart", cartProducts)
+                   addToCart(addProdButton, productName)
                }
            })
-
 
        } else {
            productImage.setImageResource(R.drawable.p2)
@@ -88,24 +90,9 @@ class ProductActivity : AppCompatActivity() {
 
            addProdButton.setOnClickListener(object : View.OnClickListener {
                override fun onClick(view: View?) {
-                   cartProducts = addToCart(addProdButton, productName)
-                   intent.putParcelableArrayListExtra("cart", cartProducts)
+                   addToCart(addProdButton, productName)
                }
            })
-
        }
-
-
     }
-    override fun onBackPressed() {
-        super.onBackPressed()
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                val intent = Intent(applicationContext, MainActivity::class.java)
-                intent.putParcelableArrayListExtra("cart", cartProducts)
-            }
-        }
-        onBackPressedDispatcher.addCallback(this, callback)
-    }
-
 }
