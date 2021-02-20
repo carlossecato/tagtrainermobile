@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class Product(
         var name: String,
         var quantity: Int,
-        var price: String
+        var price: Double,
 ) : Parcelable {
 
 

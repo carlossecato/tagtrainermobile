@@ -15,13 +15,15 @@ class ProductActivity : AppCompatActivity() {
 
     var cartProducts = Product.SingleCart.singleCartinstance
 
-    fun  cartEmpty (): Boolean {
-        return cartProducts.size <= 0
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product)
+
+        fun  cartEmpty (): Boolean {
+            return cartProducts.size <= 0
+        }
 
         fun cartNotEmpty(button: ImageButton) {
             if (cartEmpty()) {
@@ -47,17 +49,21 @@ class ProductActivity : AppCompatActivity() {
         val cartButton = findViewById(R.id.cartButtonId) as ImageButton
         cartNotEmpty(cartButton)
 
-        fun addToCart(v: View, s: String, p: String): ArrayList<Product> {
+        fun addToCart(v: View, s: String, p: Double) {
             val productAdded = Product(s, 1, p)
-            if (cartProducts.contains(productAdded)) {
-                assert(productAdded != null)
-                cartProducts.map { if (it.name == s) it.quantity++  }
+            val existingProduct = cartProducts.find({it.name == s})
+            if (existingProduct !== null) {
+                cartProducts.forEach { if (it.name == s) {
+                    it.price = it.price + p
+                    it.quantity++
+                }
+                }
             } else {
                 cartProducts.add(productAdded)
                 cartNotEmpty(cartButton)
             }
             Snackbar.make(v, "Produto Adicionado ao carrinho: " + s, Snackbar.LENGTH_LONG).show()
-            return cartProducts
+            //return cartProducts
         }
 
         if (idProduct == 0) {
@@ -65,15 +71,17 @@ class ProductActivity : AppCompatActivity() {
             productImage.visibility = View.VISIBLE
 
             val productName = products[0].split("\n")[0]
-            textView.text = productName.toString()
+            textView.text = productName
             val productDescText = products[0].split("\n")[2]
-            productDesc.text = productDescText.toString()
+            productDesc.text = productDescText
             val productPriceText = products[0].split("\n")[3].split("price:")[1]
-            productPrice.text = productPriceText.toString()
+            productPrice.text = productPriceText
+            var priceToDouble = productPriceText.split("R$ ")[1].toDouble()
+
 
             addProdButton.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(view: View?) {
-                    addToCart(addProdButton, productName, productPriceText)
+                    addToCart(addProdButton, productName, priceToDouble)
                 }
             })
 
@@ -82,16 +90,18 @@ class ProductActivity : AppCompatActivity() {
             productImage.visibility = View.VISIBLE
 
             val productName = products[1].split("\n")[0]
-            textView.text = productName.toString()
+            textView.text = productName
             val productDescText = products[1].split("\n")[2]
-            productDesc.text = productDescText.toString()
+            productDesc.text = productDescText
             val productPriceText = products[1].split("\n")[3].split("price:")[1]
-            productPrice.text = productPriceText.toString()
+            productPrice.text = productPriceText
+            var priceToDouble = productPriceText.split("R$ ")[1].toDouble()
+
 
 
             addProdButton.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(view: View?) {
-                    addToCart(addProdButton, productName, productPriceText)
+                    addToCart(addProdButton, productName, priceToDouble)
                 }
             })
 
@@ -101,14 +111,15 @@ class ProductActivity : AppCompatActivity() {
 
             val productName = products[2].split("\n")[0]
             val productDescText = products[2].split("\n")[2]
-            productDesc.text = productDescText.toString()
-            textView.text = productName.toString()
+            productDesc.text = productDescText
+            textView.text = productName
             val productPriceText = products[2].split("\n")[3].split("price:")[1]
-            productPrice.text = productPriceText.toString()
+            productPrice.text = productPriceText
+            var priceToDouble = productPriceText.split("R$ ")[1].toDouble()
 
             addProdButton.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(view: View?) {
-                    addToCart(addProdButton, productName, productPriceText)
+                    addToCart(addProdButton, productName, priceToDouble)
                 }
             })
         }
