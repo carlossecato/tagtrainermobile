@@ -10,8 +10,10 @@ data class Product(
         var price: Double,
 ) : Parcelable {
 
-
     object SingleCart {
         var singleCartinstance = ArrayList<Product>()
+    }
+    fun getName () {
+        name = name
     }
 }
