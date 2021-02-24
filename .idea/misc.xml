@@ -7,9 +7,15 @@
         <entry key="app/src/main/res/layout/activity_cart.xml" value="0.22708333333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2875" />
         <entry key="app/src/main/res/layout/activity_product.xml" value="0.2875" />
+        <entry key="app/src/main/res/layout/activity_purchase.xml" value="0.2734375" />
+        <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.21614583333333334" />
+        <entry key="app/src/main/res/layout/fragment_payment.xml" value="0.2875" />
         <entry key="app/src/main/res/layout/roundedbutton.xml" value="0.2875" />
       </map>
     </option>
+  </component>
+  <component name="ProjectPlainTextFileTypeManager">
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_blank.xml" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />

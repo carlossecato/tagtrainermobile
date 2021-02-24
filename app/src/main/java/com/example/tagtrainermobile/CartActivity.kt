@@ -1,8 +1,10 @@
 package com.example.tagtrainermobile
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Gravity
+import android.view.View
 import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TableRow
@@ -12,16 +14,25 @@ import com.example.tagtrainermobile.models.Product
 import java.text.DecimalFormat
 
 
+
+
+
 class CartActivity : AppCompatActivity() {
 
     var cartProducts = Product.SingleCart.singleCartinstance
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
         setTableForCartProducts()
         cartTotalPrice()
+        setCheckoutButtonConfig()
 
+
+    }
+    interface setRadioButtonsConfig {
+        fun setRadioButtonsConfig()
     }
 
     fun setTableForCartProducts() {
@@ -92,7 +103,7 @@ class CartActivity : AppCompatActivity() {
         totalText.textAlignment = TextView.TEXT_ALIGNMENT_CENTER
         totalText.typeface = Typeface.DEFAULT_BOLD
         val totalValue = TextView(this)
-        totalValue.text = df.format(cartTotalPrice()).toString()
+        totalValue.text = "R$ "+df.format(cartTotalPrice()).toString()
         totalValue.textSize = 24.0F
         totalValue.typeface = Typeface.DEFAULT_BOLD
 
@@ -114,5 +125,35 @@ class CartActivity : AppCompatActivity() {
         }
         return totalValue
     }
+
+    fun setCheckoutButtonConfig() {
+        val checkoutBtn = findViewById<Button>(R.id.checkoutBtnId)
+        val backButton = findViewById<Button>(R.id.backButtonCheckId)
+        checkoutBtn.visibility = View.VISIBLE
+        checkoutBtn.setOnClickListener( object : View.OnClickListener{
+             override fun onClick(view: View?) {
+                 startCheckoutFragment()
+                 checkoutBtn.visibility = View.INVISIBLE
+                 backButton.visibility = View.INVISIBLE
+            }
+        })
+        backButton.visibility = View.VISIBLE
+        backButton.setOnClickListener( object : View.OnClickListener{
+            override fun onClick (view: View?) {
+                goToListViewProducts()
+            }
+        })
+    }
+
+    fun startCheckoutFragment() {
+        val fragment  = PaymentFragment()
+        getSupportFragmentManager().beginTransaction().add(R.id.fragmentPaymentId, fragment).commit()
+    }
+
+    fun goToListViewProducts() {
+        val intent = Intent(applicationContext, MainActivity::class.java)
+        startActivity(intent)
+    }
+
 }
 
