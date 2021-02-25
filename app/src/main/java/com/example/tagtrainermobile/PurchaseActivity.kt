@@ -1,11 +1,11 @@
 package com.example.tagtrainermobile
 
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tagtrainermobile.models.Product
+import com.example.tagtrainermobile.models.cartProductsAdapter
 import java.text.DecimalFormat
 
 class PurchaseActivity : AppCompatActivity() {
@@ -52,13 +52,13 @@ class PurchaseActivity : AppCompatActivity() {
         val listItems = arrayOfNulls<Product>(cartProducts.size)
 
 
-        for (i in 0 until cartProducts.size) {
-            val recipe : Product = cartProducts[i]
-            listItems[i] = recipe
-        }
-        val adapter : ArrayAdapter<*>
-            adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, listItems)
-        purchaseTable.adapter = adapter
+//        for (i in 0 until cartProducts.size) {
+//            val recipe : Product = Objects. cartProducts[i])
+//            listItems[i] = recipe
+//        }
+
+        val adapter = cartProductsAdapter(this, cartProducts)
+            purchaseTable.adapter = adapter
     }
 
 
