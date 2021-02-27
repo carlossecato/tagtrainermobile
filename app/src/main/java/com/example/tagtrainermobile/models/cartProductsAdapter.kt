@@ -46,7 +46,7 @@ class cartProductsAdapter(val context: Context,
 
         prodNameTextView.text = productline.name
         prodPriceTextView.text = df.format(productline.price).toString()
-        prodQtdeTextView.text = "X"+productline.quantity.toString()
+        prodQtdeTextView.text = "x"+productline.quantity.toString()
 
         return rowView
     }

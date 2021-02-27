@@ -49,14 +49,6 @@ class PurchaseActivity : AppCompatActivity() {
 
     fun displayPurchaseItems() {
         val purchaseTable = findViewById<ListView>(R.id.diplayPurchaseId)
-        val listItems = arrayOfNulls<Product>(cartProducts.size)
-
-
-//        for (i in 0 until cartProducts.size) {
-//            val recipe : Product = Objects. cartProducts[i])
-//            listItems[i] = recipe
-//        }
-
         val adapter = cartProductsAdapter(this, cartProducts)
             purchaseTable.adapter = adapter
     }
