@@ -42,10 +42,10 @@ class cartProductsAdapter(val context: Context,
 
         val productline = getItem(position) as Product
 
-        val df = DecimalFormat("#.##")
+        val df = DecimalFormat("#.00")
 
         prodNameTextView.text = productline.name
-        prodPriceTextView.text = df.format(productline.price).toString()
+        prodPriceTextView.text = "R$ "+df.format(productline.price).toString()
         prodQtdeTextView.text = "x"+productline.quantity.toString()
 
         return rowView

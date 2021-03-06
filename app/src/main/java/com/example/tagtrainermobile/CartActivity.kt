@@ -53,6 +53,7 @@ class CartActivity : AppCompatActivity() {
         val prodQuantityHeader = TextView(this)
         prodQuantityHeader.text = "Qtd."
         prodQuantityHeader.textSize = 14.0F
+        prodQuantityHeader.textAlignment = TextView.TEXT_ALIGNMENT_VIEW_START
         prodQuantityHeader.typeface = Typeface.DEFAULT_BOLD
         val prodPriceHeader = TextView(this)
         prodPriceHeader.text = "Preço"
@@ -74,8 +75,8 @@ class CartActivity : AppCompatActivity() {
 
             prodName.text = cartProducts.get(i).name
             prodQuantity.text = cartProducts.get(i).quantity.toString()
-            val df = DecimalFormat("#.##")
-            prodPrice.text = df.format(cartProducts.get(i).price).toString()
+            val df = DecimalFormat("#.00")
+            prodPrice.text = "R$ " +df.format(cartProducts.get(i).price).toString()
             //prodRemove.setBackgroundResource(R.drawable.img)
 
             tableRow.addView(prodQuantity)
@@ -92,7 +93,7 @@ class CartActivity : AppCompatActivity() {
         val totalCartRow = TableRow(this)
         totalCartRow.gravity = Gravity.CENTER_HORIZONTAL
 
-        val df = DecimalFormat("#.##")
+        val df = DecimalFormat("#.00")
         val emptySlot = TextView(this)
         emptySlot.text = ""
         val emptySlot2 = TextView(this)

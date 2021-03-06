@@ -1,9 +1,12 @@
 package com.example.tagtrainermobile
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.ListView
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tagtrainermobile.models.ListProductsAdapter
 import com.example.tagtrainermobile.models.ListingProduct
@@ -57,9 +60,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setListProducts()
         displayListingPage()
+
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+
+        val menu = findViewById<SearchView>(R.id.searchViewId)
+
+        menu.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+
     }
-
-
 
     fun displayListingPage() {
 //        val teste : ImageView = findViewById(R.id.listingProdImgId)

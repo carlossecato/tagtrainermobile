@@ -47,12 +47,12 @@ class ListProductsAdapter(val context: Context,
 
         val productline = getItem(position) as ListingProduct
 
-        val df = DecimalFormat("#.##")
+        val df = DecimalFormat("#.00")
 
         listingProdId.text = "ID: "+productline.listProdId.toString()
         listingProdNameId.text = productline.listProdName
         listingProdDescId.text = productline.listProdDesc
-        listingProdPriceId.text = "R$ "+productline.listProdPrice.toString()
+        listingProdPriceId.text = "R$ "+ df.format(productline.listProdPrice).toString()
         listingProdImag.setImageDrawable(productline.listProdImg.drawable)
 
 

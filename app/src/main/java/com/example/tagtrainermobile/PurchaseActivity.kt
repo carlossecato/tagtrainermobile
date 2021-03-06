@@ -40,7 +40,7 @@ class PurchaseActivity : AppCompatActivity() {
     }
 
     fun setTransactionInfo() {
-        val df = DecimalFormat("#.##")
+        val df = DecimalFormat("#.00")
         val txtTransactioId = findViewById<TextView>(R.id.transactioId)
             txtTransactioId.text = "Sua Compra: "+setRandomTransactionCode()
         val txtTransactionTotal = findViewById<TextView>(R.id.transactioTotalId)
