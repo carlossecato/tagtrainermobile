@@ -10,6 +10,7 @@
         <entry key="app/src/main/res/layout/activity_product.xml" value="0.2875" />
         <entry key="app/src/main/res/layout/activity_purchase.xml" value="0.2734375" />
         <entry key="app/src/main/res/layout/activity_searchable.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/banner_pager_item.xml" value="0.18125" />
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.21614583333333334" />
         <entry key="app/src/main/res/layout/fragment_payment.xml" value="0.2875" />
         <entry key="app/src/main/res/layout/list_cart_item.xml" value="0.3802083333333333" />
