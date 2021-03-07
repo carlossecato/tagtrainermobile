@@ -1,8 +1,10 @@
 package com.example.tagtrainermobile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.PagerAdapter
@@ -17,6 +19,7 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         setHomeBanners()
+        homeClickButton()
 
         val pager = findViewById<ViewPager>(R.id.homeBannerId)
             pager.adapter = homeBannerAdapter(bannersHome)
@@ -41,8 +44,6 @@ class HomeActivity : AppCompatActivity() {
             val view: View = layoutInflater.inflate(R.layout.banner_pager_item,container, false) as ViewGroup
             val teste = view.findViewById<ViewPager>(R.id.bannerPagerId) as ImageView
                 teste.setImageDrawable(banners[position].bannerImg.drawable)
-
-
             container.addView(view)
             return view
         }
@@ -57,6 +58,16 @@ class HomeActivity : AppCompatActivity() {
             return view == `object`
         }
 
-
     }
+
+    fun homeClickButton() {
+        val button = findViewById<Button>(R.id.homeButtonId)
+        button.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(view: View?) {
+                val intent = Intent(applicationContext, MainActivity::class.java)
+                startActivity(intent)
+            }
+        })
+    }
+
 }
