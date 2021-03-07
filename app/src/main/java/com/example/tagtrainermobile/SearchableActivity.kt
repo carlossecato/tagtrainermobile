@@ -4,6 +4,7 @@ import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ class SearchableActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_searchable)
+        searchedItens.clear()
 
         if (Intent.ACTION_SEARCH == intent.action) {
             intent.getStringExtra(SearchManager.QUERY)?.also { query ->
@@ -28,14 +30,12 @@ class SearchableActivity : AppCompatActivity() {
     }
 
     fun doMySearch(query : String) : ListingProduct? {
-        Log.d("dasasdasd","sda")
         for (List in listingProducts) {
             if (List.listProdId.toString() == query) {
-                Log.d("dasasdasd","sda")
                 return List
-            } else if (List.listProdName.contains(query)) {
+            } else if (List.listProdName.contains(query, ignoreCase = true)) {
                 return List
-            } else if (List.listProdDesc.contains(query)) {
+            } else if (List.listProdDesc.contains(query, ignoreCase = true)) {
                 return List
             }
         }
@@ -49,10 +49,14 @@ class SearchableActivity : AppCompatActivity() {
         val productResult = doMySearch(query)
         if (productResult != null) {
             searchedItens.add(productResult)
+            val adapter = ListProductsAdapter(this, searchedItens)
+            searchTable.adapter = adapter
+        } else {
+            val prodNotFoundId = findViewById<TextView>(R.id.prodNotFoundId)
+                prodNotFoundId.visibility = View.VISIBLE
+                prodNotFoundId.text = "Produto não Encontrado!!"
+            Log.d("prod","prodnao encontrado")
         }
-        val adapter = ListProductsAdapter(this, searchedItens)
-        searchTable.adapter = adapter
-
 
     }
 }
