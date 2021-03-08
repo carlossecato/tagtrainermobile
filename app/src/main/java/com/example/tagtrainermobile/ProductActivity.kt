@@ -8,13 +8,14 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.tagtrainermobile.models.ListingProduct
 import com.example.tagtrainermobile.models.Product
 import com.google.android.material.snackbar.Snackbar
 
 class ProductActivity : AppCompatActivity() {
 
     var cartProducts = Product.SingleCart.singleCartinstance
-
+    var listingProducts = ListingProduct.SingleList.singleListInstance
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +40,6 @@ class ProductActivity : AppCompatActivity() {
             }
         }
 
-        val products = intent.getStringArrayExtra("products") as Array
         val idProduct = intent.getIntExtra("id", 34)
         val productImage = findViewById<ImageView>(R.id.productImageSrcID) as ImageView
         val textView = findViewById<TextView>(R.id.prodLabel) as TextView
@@ -63,65 +63,24 @@ class ProductActivity : AppCompatActivity() {
                 cartNotEmpty(cartButton)
             }
             Snackbar.make(v, "Produto Adicionado ao carrinho: " + s, Snackbar.LENGTH_LONG).show()
-            //return cartProducts
         }
 
-        if (idProduct == 0) {
-            productImage.setImageResource(R.drawable.p0)
+
+            productImage.setImageDrawable(listingProducts.get(idProduct).listProdImg.drawable)
             productImage.visibility = View.VISIBLE
 
-            val productName = products[0].split("\n")[0]
+            val productName = listingProducts.get(idProduct).listProdName
             textView.text = productName
-            val productDescText = products[0].split("\n")[2]
+            val productDescText = listingProducts.get(idProduct).listProdDesc
             productDesc.text = productDescText
-            val productPriceText = products[0].split("\n")[3].split("price:")[1]
-            productPrice.text = productPriceText
-            var priceToDouble = productPriceText.split("R$ ")[1].toDouble()
-
+            val productPriceText = listingProducts.get(idProduct).listProdPrice
+            productPrice.text = "R$ "+productPriceText.toString()
 
             addProdButton.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(view: View?) {
-                    addToCart(addProdButton, productName, priceToDouble)
+                    addToCart(addProdButton, productName, productPriceText)
                 }
             })
 
-        } else if (idProduct == 1) {
-            productImage.setImageResource(R.drawable.p1)
-            productImage.visibility = View.VISIBLE
-
-            val productName = products[1].split("\n")[0]
-            textView.text = productName
-            val productDescText = products[1].split("\n")[2]
-            productDesc.text = productDescText
-            val productPriceText = products[1].split("\n")[3].split("price:")[1]
-            productPrice.text = productPriceText
-            var priceToDouble = productPriceText.split("R$ ")[1].toDouble()
-
-
-
-            addProdButton.setOnClickListener(object : View.OnClickListener {
-                override fun onClick(view: View?) {
-                    addToCart(addProdButton, productName, priceToDouble)
-                }
-            })
-
-        } else {
-            productImage.setImageResource(R.drawable.p2)
-            productImage.visibility = View.VISIBLE
-
-            val productName = products[2].split("\n")[0]
-            val productDescText = products[2].split("\n")[2]
-            productDesc.text = productDescText
-            textView.text = productName
-            val productPriceText = products[2].split("\n")[3].split("price:")[1]
-            productPrice.text = productPriceText
-            var priceToDouble = productPriceText.split("R$ ")[1].toDouble()
-
-            addProdButton.setOnClickListener(object : View.OnClickListener {
-                override fun onClick(view: View?) {
-                    addToCart(addProdButton, productName, priceToDouble)
-                }
-            })
-        }
     }
 }

@@ -3,7 +3,6 @@ package com.example.tagtrainermobile
 import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ListView
 import android.widget.TextView
@@ -13,6 +12,7 @@ import com.example.tagtrainermobile.models.ListingProduct
 
 var listingProducts = ListingProduct.SingleList.singleListInstance
 var searchedItens = ArrayList<ListingProduct>()
+
 
 class SearchableActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +26,16 @@ class SearchableActivity : AppCompatActivity() {
                 setSearcheableConfiguration(query)
             }
         }
+    }
 
+    fun onClickedProducts(v: ListView, p: Int) {
+        val intent = Intent(applicationContext, ProductActivity::class.java)
+
+        val params = Bundle()
+        params.putInt("id", p-1)
+        intent.putExtras(params)
+
+        startActivity(intent)
     }
 
     fun doMySearch(query : String) : ListingProduct? {
@@ -51,11 +60,15 @@ class SearchableActivity : AppCompatActivity() {
             searchedItens.add(productResult)
             val adapter = ListProductsAdapter(this, searchedItens)
             searchTable.adapter = adapter
+            val prodId = productResult.listProdId
+            searchTable.setOnItemClickListener { parent, view, position, id ->
+                onClickedProducts(searchTable, prodId)
+            }
+
         } else {
             val prodNotFoundId = findViewById<TextView>(R.id.prodNotFoundId)
                 prodNotFoundId.visibility = View.VISIBLE
                 prodNotFoundId.text = "Produto não Encontrado!!"
-            Log.d("prod","prodnao encontrado")
         }
 
     }
