@@ -38,17 +38,18 @@ class SearchableActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun doMySearch(query : String) : ListingProduct? {
+    fun doMySearch(query : String) : ArrayList<ListingProduct>? {
+        val allSearchProducts = ArrayList<ListingProduct>()
         for (List in listingProducts) {
             if (List.listProdId.toString() == query) {
-                return List
+                allSearchProducts.add(List)
             } else if (List.listProdName.contains(query, ignoreCase = true)) {
-                return List
+                allSearchProducts.add(List)
             } else if (List.listProdDesc.contains(query, ignoreCase = true)) {
-                return List
+                allSearchProducts.add(List)
             }
         }
-        return null
+        return allSearchProducts
     }
 
     fun setSearcheableConfiguration(query : String) {
@@ -56,19 +57,17 @@ class SearchableActivity : AppCompatActivity() {
             searchResult.text = "Resultado de Busca: "+query
         val searchTable = findViewById<ListView>(R.id.tableResultsId)
         val productResult = doMySearch(query)
-        if (productResult != null) {
-            searchedItens.add(productResult)
-            val adapter = ListProductsAdapter(this, searchedItens)
+        if (productResult?.size!! > 0) {
+            val adapter = ListProductsAdapter(this, productResult)
             searchTable.adapter = adapter
-            val prodId = productResult.listProdId
             searchTable.setOnItemClickListener { parent, view, position, id ->
-                onClickedProducts(searchTable, prodId)
+                onClickedProducts(searchTable, productResult.get(position).listProdId)
             }
 
         } else {
             val prodNotFoundId = findViewById<TextView>(R.id.prodNotFoundId)
                 prodNotFoundId.visibility = View.VISIBLE
-                prodNotFoundId.text = "Produto não Encontrado!!"
+                prodNotFoundId.text = "Ops!! Produto não Encontrado!!"
         }
 
     }

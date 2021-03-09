@@ -30,6 +30,18 @@ class MainActivity : AppCompatActivity() {
             imageView2.setImageResource(R.drawable.p2)
             val prod2 = ListingProduct(imageView2, 3, "Desodorante Colônia Kaiak Urbe Masculino - 100ml", "Kaiak Urbe", 94.90, "Principal")
             listingProducts.add(prod2)
+            val imageView3 = ImageView(this)
+            imageView3.setImageResource(R.drawable.bp1)
+            val prod3 = ListingProduct(imageView3, 4, "Aproveite os nossos queridinhos de hidratação e limpeza para intensificar a sua rotina", "Presente MaisQuerido", 79.90, "Principal")
+            listingProducts.add(prod3)
+            val imageView4 = ImageView(this)
+            imageView4.setImageResource(R.drawable.bp2)
+            val prod4 = ListingProduct(imageView4, 5, "O Presente Natura Homem Miniaturas possui fragrância amadeirada moderada com o frescor das ervas aromáticas", "Presente Homem", 52.90, "Principal")
+            listingProducts.add(prod4)
+            val imageView5 = ImageView(this)
+            imageView5.setImageResource(R.drawable.bp3)
+            val prod5 = ListingProduct(imageView5, 6, "Nutrir a pele, alimentamos também o nosso sentir. Por isso, desenvolveu produtos ultra hidratantes", "Presente TodoDia", 34.90, "Principal")
+            listingProducts.add(prod5)
         } else return
     }
 
