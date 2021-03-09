@@ -9,7 +9,7 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/homeBannerId"
         android:layout_width="409dp"
-        android:layout_height="390dp"
+        android:layout_height="250dp"
         android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

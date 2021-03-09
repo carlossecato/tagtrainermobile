@@ -7,7 +7,8 @@ data class ListingProduct (
         var listProdId: Int,
         var listProdDesc: String,
         var listProdName: String,
-        var listProdPrice: Double
+        var listProdPrice: Double,
+        var listProdCat: String
         ) {
     object SingleList {
     var singleListInstance = ArrayList<ListingProduct>()

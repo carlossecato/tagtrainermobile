@@ -20,17 +20,16 @@ class MainActivity : AppCompatActivity() {
         if(listingProducts.size <= 0) {
             val imageView0 = ImageView(this)
             imageView0.setImageResource(R.drawable.p0)
-            val prod0 = ListingProduct(imageView0, 1, "Uma fragrância sensual e vibrante perfeita para momentos especiais.", "Luna Radiante", 89.90)
+            val prod0 = ListingProduct(imageView0, 1, "Uma fragrância sensual e vibrante perfeita para momentos especiais.", "Luna Radiante", 89.90, "Principal")
             listingProducts.add(prod0)
             val imageView1 = ImageView(this)
             imageView1.setImageResource(R.drawable.p1)
-            val prod1 = ListingProduct(imageView1, 2, "Todo mundo tem um jeito único de se perfumar. Mas para aproveitar todo o potencial da fragrância", "Essencial Masculino", 129.90)
+            val prod1 = ListingProduct(imageView1, 2, "Todo mundo tem um jeito único de se perfumar. Mas para aproveitar todo o potencial da fragrância", "Essencial Masculino", 129.90, "Principal")
             listingProducts.add(prod1)
             val imageView2 = ImageView(this)
             imageView2.setImageResource(R.drawable.p2)
-            val prod2 = ListingProduct(imageView2, 3, "Desodorante Colônia Kaiak Urbe Masculino - 100ml", "Kaiak Urbe", 94.90)
+            val prod2 = ListingProduct(imageView2, 3, "Desodorante Colônia Kaiak Urbe Masculino - 100ml", "Kaiak Urbe", 94.90, "Principal")
             listingProducts.add(prod2)
-            print(listingProducts.get(0).listProdName)
         } else return
     }
 
@@ -58,9 +57,25 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun filteredProductsList() : ArrayList<ListingProduct> {
+        val listCategory = intent.getStringExtra("id")
+
+        val categoryList = ArrayList<ListingProduct>()
+            for(i in listingProducts) {
+                if(i.listProdCat == listCategory) {
+                    categoryList.add(i)
+                } else {
+                    return listingProducts
+                }
+            }
+        return categoryList
+    }
+
     fun displayListingPage() {
+
         val table: ListView = findViewById(R.id.tableID)
-        val adapter = ListProductsAdapter(this, listingProducts)
+
+        val adapter = ListProductsAdapter(this, filteredProductsList())
         table.adapter = adapter
             table.setOnItemClickListener { parent, view, position, id ->
                 onClickedProducts(table, position)
