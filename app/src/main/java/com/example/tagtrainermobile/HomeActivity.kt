@@ -33,7 +33,7 @@ class HomeActivity : AppCompatActivity() {
             bannersHome.add(banner0)
             val bannerImg1 = ImageView(this)
             bannerImg1.setImageResource(R.drawable.b2)
-            val banner1 = Banners(bannerImg1, 2, "top_banner_2", "Principal")
+            val banner1 = Banners(bannerImg1, 2, "top_banner_2", "Presentes")
             bannersHome.add(banner1)
         } else return
 
@@ -80,7 +80,7 @@ class HomeActivity : AppCompatActivity() {
         val intent = Intent(applicationContext, MainActivity::class.java)
         Log.d("oi   ",p)
         val params = Bundle()
-        params.putString("id", p)
+        params.putString("listType", p)
         intent.putExtras(params)
 
         startActivity(intent)
