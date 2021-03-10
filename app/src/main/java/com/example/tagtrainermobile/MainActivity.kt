@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         val adapter = ListProductsAdapter(this, filteredProductsList())
         table.adapter = adapter
             table.setOnItemClickListener { parent, view, position, id ->
-                onClickedProducts(table, position)
+                onClickedProducts(table, filteredProductsList().get(position).listProdId-1)
             }
     }
 }
