@@ -21,7 +21,9 @@ import java.text.DecimalFormat
 class CartActivity : AppCompatActivity() {
 
     var cartProducts = Product.SingleCart.singleCartinstance
-    val user = User("teste", "teste2", false)
+    //val user = User("teste", "teste2", false)
+    val user = User.sigleUser.instance
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

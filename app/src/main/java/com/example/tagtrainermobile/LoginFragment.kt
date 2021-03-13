@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.example.tagtrainermobile.models.User
 
 
 class LoginFragment : Fragment() {
+
+    val user = User.sigleUser.instance
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,6 +30,7 @@ class LoginFragment : Fragment() {
         val button = getView()?.findViewById<Button>(R.id.enterLoginId)
         button?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(view: View?) {
+                user.isLogged = true
                 val paymentFragment = PaymentFragment()
               getFragmentManager()?.beginTransaction()?.add(R.id.fragmentPaymentId, paymentFragment)?.commit()
             }
