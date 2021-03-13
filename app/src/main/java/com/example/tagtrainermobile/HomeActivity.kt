@@ -2,7 +2,6 @@ package com.example.tagtrainermobile
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -78,7 +77,7 @@ class HomeActivity : AppCompatActivity() {
 
     fun onClickBannerAction(p: String) {
         val intent = Intent(applicationContext, MainActivity::class.java)
-        Log.d("oi   ",p)
+
         val params = Bundle()
         params.putString("listType", p)
         intent.putExtras(params)

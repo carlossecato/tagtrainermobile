@@ -11,6 +11,7 @@ import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tagtrainermobile.models.Product
+import com.example.tagtrainermobile.models.User
 import java.text.DecimalFormat
 
 
@@ -20,7 +21,7 @@ import java.text.DecimalFormat
 class CartActivity : AppCompatActivity() {
 
     var cartProducts = Product.SingleCart.singleCartinstance
-
+    val user = User("teste", "teste2", false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -147,8 +148,13 @@ class CartActivity : AppCompatActivity() {
     }
 
     fun startCheckoutFragment() {
-        val fragment  = PaymentFragment()
-        getSupportFragmentManager().beginTransaction().add(R.id.fragmentPaymentId, fragment).commit()
+        if(user.isLogged) {
+            val paymentFragment = PaymentFragment()
+            getSupportFragmentManager().beginTransaction().add(R.id.fragmentPaymentId, paymentFragment).commit()
+        } else {
+            val loginFragment = LoginFragment()
+            getSupportFragmentManager().beginTransaction().add(R.id.fragmentPaymentId, loginFragment).commit()
+        }
     }
 
     fun goToListViewProducts() {
