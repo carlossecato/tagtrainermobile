@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.ImageView
 import android.widget.TextView
 import com.example.tagtrainermobile.R
 import java.text.DecimalFormat
@@ -32,6 +33,8 @@ class cartProductsAdapter(val context: Context,
         val rowView = inflater.inflate(R.layout.list_cart_item,parent,false)
 
         // Get title element
+        val cartItemImgId = rowView.findViewById(R.id.cartItemImgId) as ImageView
+
         val prodNameTextView = rowView.findViewById(R.id.prodNameLayId) as TextView
 
         // Get subtitle element
@@ -44,6 +47,7 @@ class cartProductsAdapter(val context: Context,
 
         val df = DecimalFormat("#.00")
 
+        cartItemImgId.setImageDrawable(productline.prodImg.drawable)
         prodNameTextView.text = productline.name
         prodPriceTextView.text = "R$ "+df.format(productline.price).toString()
         prodQtdeTextView.text = "x"+productline.quantity.toString()

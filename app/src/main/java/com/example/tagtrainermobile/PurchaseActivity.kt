@@ -60,5 +60,4 @@ class PurchaseActivity : AppCompatActivity() {
             purchaseTable.adapter = adapter
     }
 
-
 }

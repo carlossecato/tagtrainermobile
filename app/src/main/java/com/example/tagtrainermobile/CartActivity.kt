@@ -21,9 +21,7 @@ import java.text.DecimalFormat
 class CartActivity : AppCompatActivity() {
 
     var cartProducts = Product.SingleCart.singleCartinstance
-    //val user = User("teste", "teste2", false)
     val user = User.sigleUser.instance
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +29,8 @@ class CartActivity : AppCompatActivity() {
         setTableForCartProducts()
         cartTotalPrice()
         setCheckoutButtonConfig()
-
-
     }
+
     interface setRadioButtonsConfig {
         fun setRadioButtonsConfig()
     }
@@ -125,7 +122,6 @@ class CartActivity : AppCompatActivity() {
         for(i in cartProducts.indices) {
             cartProducts.get(i).quantity
             totalValue = totalValue + cartProducts.get(i).price
-
         }
         return totalValue
     }

@@ -1,19 +1,15 @@
 package com.example.tagtrainermobile.models
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import android.widget.ImageView
 
-@Parcelize
+
 data class Product(
+        var prodImg: ImageView,
         var name: String,
         var quantity: Int,
         var price: Double,
-) : Parcelable {
-
+) {
     object SingleCart {
         var singleCartinstance = ArrayList<Product>()
-    }
-    fun getName () {
-        name = name
     }
 }
