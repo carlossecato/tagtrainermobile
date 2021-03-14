@@ -2,6 +2,7 @@ package com.example.tagtrainermobile
 
 import android.os.Bundle
 import android.widget.ListView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tagtrainermobile.models.Product
@@ -18,6 +19,7 @@ class PurchaseActivity : AppCompatActivity() {
         cartTotalPrice()
         setRandomTransactionCode()
         setTransactionInfo()
+        setProgressBar()
         displayPurchaseItems()
     }
 
@@ -45,6 +47,11 @@ class PurchaseActivity : AppCompatActivity() {
             txtTransactioId.text = "Sua Compra: "+setRandomTransactionCode()
         val txtTransactionTotal = findViewById<TextView>(R.id.transactioTotalId)
             txtTransactionTotal.text = "Total: R$ "+df.format(cartTotalPrice())
+    }
+
+    fun setProgressBar() {
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar2)
+            progressBar.progress = 100
     }
 
     fun displayPurchaseItems() {

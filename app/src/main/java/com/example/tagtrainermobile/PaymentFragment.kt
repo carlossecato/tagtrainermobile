@@ -5,15 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.RadioButton
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
+import com.example.tagtrainermobile.models.User
 import com.google.android.material.textfield.TextInputLayout
 
 
 class PaymentFragment : Fragment(), CartActivity.setRadioButtonsConfig {
+
+    val user = User.sigleUser.instance
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -23,7 +23,17 @@ class PaymentFragment : Fragment(), CartActivity.setRadioButtonsConfig {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setProgressBar()
         setRadioButtonsConfig()
+    }
+
+    fun setProgressBar() {
+        val progressBar = getView()?.findViewById<ProgressBar>(R.id.progressBar)
+        if(user.isLogged) {
+            progressBar?.progress = 50
+        } else {
+            progressBar?.progress = 33
+        }
     }
 
         override fun setRadioButtonsConfig() {

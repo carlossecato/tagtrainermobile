@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import com.example.tagtrainermobile.models.User
 
@@ -23,7 +24,13 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setProgressBar()
         setButtonLoginConfig()
+    }
+
+    fun setProgressBar() {
+        val progressBar = getView()?.findViewById<ProgressBar>(R.id.progressBar)
+        progressBar?.progress = 33
     }
 
     fun setButtonLoginConfig() {
