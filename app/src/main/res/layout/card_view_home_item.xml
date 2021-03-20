@@ -104,7 +104,7 @@
             android:text="TextView" />
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/buttonBuyCardId2"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

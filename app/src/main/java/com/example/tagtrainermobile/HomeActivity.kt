@@ -109,21 +109,32 @@ class HomeActivity : AppCompatActivity() {
             val homeCardImgId = view.findViewById<ImageView>(R.id.homeCardImgId)
             val prodNameCardId = view.findViewById<TextView>(R.id.prodNameCardId)
             val prodPriceCardId = view.findViewById<TextView>(R.id.prodPriceCardId)
+            val buttonBuyCardId = view.findViewById<Button>(R.id.buttonBuyCardId)
             homeCardImgId.setImageDrawable(firstProductCard.listProdImg.drawable)
             prodNameCardId.text = firstProductCard.listProdName
             val df = DecimalFormat("#.00")
             prodPriceCardId.text = "R$ "+df.format(firstProductCard.listProdPrice).toString()
+            buttonBuyCardId.setOnClickListener(object : View.OnClickListener {
+                        override fun onClick(view: View?) {
+                            onClickCardAction(firstProductCard.listProdId)
+                        }
+                    })
 
             val secondProductCard = dataSource.random()
                 val homeCardImgId2 = view.findViewById<ImageView>(R.id.homeCardImgId2)
                 val prodNameCardId2 = view.findViewById<TextView>(R.id.prodNameCardId2)
                 val prodPriceCardId2 = view.findViewById<TextView>(R.id.prodPriceCardId2)
+                val buttonBuyCardId2 = view.findViewById<Button>(R.id.buttonBuyCardId2)
                 homeCardImgId2.setImageDrawable(secondProductCard.listProdImg.drawable)
                 prodNameCardId2.text = secondProductCard.listProdName
                 val df1 = DecimalFormat("#.00")
                 prodPriceCardId2.text = "R$ " + df1.format(secondProductCard.listProdPrice).toString()
+                buttonBuyCardId2.setOnClickListener(object : View.OnClickListener {
+                            override fun onClick(view: View?) {
+                                onClickCardAction(secondProductCard.listProdId)
+                            }
+                        })
 
-            view.setOnClickListener()
 
             container.addView(view)
             return view
@@ -161,9 +172,19 @@ class HomeActivity : AppCompatActivity() {
 
         startActivity(intent)
     }
+
     fun setHomeCards() {
         val card1 = findViewById<ViewPager>(R.id.pagerCardsHomeId)
         card1.adapter = homeProductsAdapter(listingProducts)
     }
 
+    fun  onClickCardAction(p: Int) {
+        val intent = Intent(applicationContext, ProductActivity::class.java)
+
+        val params = Bundle()
+        params.putInt("id", p-1)
+        intent.putExtras(params)
+
+        startActivity(intent)
+    }
 }
