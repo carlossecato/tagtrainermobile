@@ -5,11 +5,9 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
-import android.widget.Button
-import android.widget.TableLayout
-import android.widget.TableRow
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.tagtrainermobile.models.ListingProduct
 import com.example.tagtrainermobile.models.Product
 import com.example.tagtrainermobile.models.User
 import java.text.DecimalFormat
@@ -20,6 +18,7 @@ import java.text.DecimalFormat
 
 class CartActivity : AppCompatActivity() {
 
+    var listingProduct = ListingProduct.SingleList.singleListInstance
     var cartProducts = Product.SingleCart.singleCartinstance
     val user = User.sigleUser.instance
 
@@ -29,6 +28,7 @@ class CartActivity : AppCompatActivity() {
         setTableForCartProducts()
         cartTotalPrice()
         setCheckoutButtonConfig()
+
     }
 
     interface setRadioButtonsConfig {
@@ -37,6 +37,7 @@ class CartActivity : AppCompatActivity() {
 
     fun setTableForCartProducts() {
 
+        val totalValue = TextView(this)
         val table: TableLayout = findViewById(R.id.tableCartId)
         val tableTitle = TextView(this)
         tableTitle.gravity = Gravity.CENTER_HORIZONTAL
@@ -59,9 +60,11 @@ class CartActivity : AppCompatActivity() {
         prodPriceHeader.text = "Preço"
         prodPriceHeader.textSize = 14.0F
         prodPriceHeader.typeface = Typeface.DEFAULT_BOLD
+
         tableRowHeader.addView(prodQuantityHeader)
         tableRowHeader.addView(prodNameHeader)
         tableRowHeader.addView(prodPriceHeader)
+
         table.addView(tableRowHeader)
 
         for (i in cartProducts.indices) {
@@ -69,15 +72,29 @@ class CartActivity : AppCompatActivity() {
             val prodName = TextView(this)
             val prodQuantity = TextView(this)
             val prodPrice = TextView(this)
-            val prodRemove = Button(this)
+            val prodRemove = ImageButton(this)
 
-            tableRow.gravity = Gravity.CENTER_HORIZONTAL
+            tableRow.gravity = Gravity.CENTER
 
             prodName.text = cartProducts.get(i).name
             prodQuantity.text = cartProducts.get(i).quantity.toString()
             val df = DecimalFormat("#.00")
             prodPrice.text = "R$ " +df.format(cartProducts.get(i).price).toString()
-            //prodRemove.setBackgroundResource(R.drawable.img)
+            prodRemove.setImageResource(R.drawable.img)
+            prodRemove.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(view: View?) {
+                   removeFromCart(cartProducts.get(i))
+                    val df = DecimalFormat("#.00")
+                    prodPrice.text = "R$ " +df.format(cartProducts.get(i).price).toString()
+                    prodQuantity.text = cartProducts.get(i).quantity.toString()
+                    totalValue.text = "R$ "+df.format(cartTotalPrice()).toString()
+                    if(cartProducts.get(i).quantity <=0) {
+                        table.removeView(tableRow)
+                        cartProducts.remove(cartProducts.get(i))
+                    }
+                }
+            })
+
 
             tableRow.addView(prodQuantity)
             tableRow.addView(prodName)
@@ -103,7 +120,7 @@ class CartActivity : AppCompatActivity() {
         totalText.textSize = 14.0F
         totalText.textAlignment = TextView.TEXT_ALIGNMENT_CENTER
         totalText.typeface = Typeface.DEFAULT_BOLD
-        val totalValue = TextView(this)
+
         totalValue.text = "R$ "+df.format(cartTotalPrice()).toString()
         totalValue.textSize = 24.0F
         totalValue.typeface = Typeface.DEFAULT_BOLD
@@ -114,6 +131,20 @@ class CartActivity : AppCompatActivity() {
         totalCartRow.addView(emptySlot2)
 
         table.addView(totalCartRow)
+    }
+
+    fun removeFromCart(p : Product ) {
+        val unitaryPrice = listingProduct.find({ it.listProdName == p.name })!!
+        val existingProduct = cartProducts.find({ it.name == p.name })
+        if (existingProduct !== null) {
+            cartProducts.forEach {
+                if (it.name == p.name) {
+                    it.price = it.price - unitaryPrice.listProdPrice
+                    it.quantity--
+                }
+            }
+        }
+
     }
 
     fun cartTotalPrice() : Double {

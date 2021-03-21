@@ -133,7 +133,7 @@ class HomeActivity : AppCompatActivity() {
                             override fun onClick(view: View?) {
                                 onClickCardAction(secondProductCard.listProdId)
                             }
-                        })
+                })
 
 
             container.addView(view)
