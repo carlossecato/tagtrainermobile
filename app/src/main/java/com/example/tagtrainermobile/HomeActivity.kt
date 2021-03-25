@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager
 import com.example.tagtrainermobile.models.Banners
 import com.example.tagtrainermobile.models.ListingProduct
 import java.text.DecimalFormat
+import java.util.*
 
 class HomeActivity : AppCompatActivity() {
 
@@ -57,9 +58,48 @@ class HomeActivity : AppCompatActivity() {
         } else return
     }
 
+    fun timerBanners() {
+        val pager = findViewById<ViewPager>(R.id.homeBannerId)
+        if(pager.currentItem == 0) {
+            Timer().schedule(object : TimerTask() {
+                override fun run() {
+                    pager.post(Runnable {
+                        pager.setCurrentItem(pager.currentItem + 1, true)
+                        return@Runnable
+                    })
+                }
+            }, 5000)
+        } else {
+            Timer().schedule(object : TimerTask() {
+                override fun run() {
+                    pager.post(Runnable {
+                        pager.setCurrentItem(pager.currentItem - 1,true)
+                        return@Runnable
+                    })
+                }
+            }, 5000)
+        }
+    }
+
     fun setHomeBanners() {
         val pager = findViewById<ViewPager>(R.id.homeBannerId)
         pager.adapter = homeBannerAdapter(bannersHome)
+
+        pager.post(Runnable { timerBanners() })
+            pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                    timerBanners()
+                }
+
+                override fun onPageSelected(position: Int) {
+                    return
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {
+                    return
+                }
+            })
+
         if(bannersHome.size <= 0) {
             val bannerImg0 = ImageView(this)
             bannerImg0.setImageResource(R.drawable.b1)
@@ -70,7 +110,6 @@ class HomeActivity : AppCompatActivity() {
             val banner1 = Banners(bannerImg1, 2, "top_banner_2", "Presentes")
             bannersHome.add(banner1)
         } else return
-
     }
 
     private inner class homeBannerAdapter(val banners : ArrayList<Banners>) : PagerAdapter() {
@@ -82,6 +121,7 @@ class HomeActivity : AppCompatActivity() {
                 teste.setOnClickListener(object : View.OnClickListener {
                     override fun onClick(view: View?) {
                         onClickBannerAction(banners[position].promotion_name)
+
                     }
                 })
             container.addView(view)
@@ -105,7 +145,7 @@ class HomeActivity : AppCompatActivity() {
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val view: View = layoutInflater.inflate(R.layout.card_view_home_item, container, false) as ViewGroup
 
-            val firstProductCard = dataSource.random()
+            val firstProductCard = dataSource[position]
             val homeCardImgId = view.findViewById<ImageView>(R.id.homeCardImgId)
             val prodNameCardId = view.findViewById<TextView>(R.id.prodNameCardId)
             val prodPriceCardId = view.findViewById<TextView>(R.id.prodPriceCardId)
@@ -115,27 +155,25 @@ class HomeActivity : AppCompatActivity() {
             val df = DecimalFormat("#.00")
             prodPriceCardId.text = "R$ "+df.format(firstProductCard.listProdPrice).toString()
             buttonBuyCardId.setOnClickListener(object : View.OnClickListener {
-                        override fun onClick(view: View?) {
-                            onClickCardAction(firstProductCard.listProdId)
-                        }
-                    })
+                override fun onClick(view: View?) {
+                    onClickCardAction(firstProductCard.listProdId)
+                }
+            })
 
-            val secondProductCard = dataSource.random()
-                val homeCardImgId2 = view.findViewById<ImageView>(R.id.homeCardImgId2)
-                val prodNameCardId2 = view.findViewById<TextView>(R.id.prodNameCardId2)
-                val prodPriceCardId2 = view.findViewById<TextView>(R.id.prodPriceCardId2)
-                val buttonBuyCardId2 = view.findViewById<Button>(R.id.buttonBuyCardId2)
-                homeCardImgId2.setImageDrawable(secondProductCard.listProdImg.drawable)
-                prodNameCardId2.text = secondProductCard.listProdName
-                val df1 = DecimalFormat("#.00")
-                prodPriceCardId2.text = "R$ " + df1.format(secondProductCard.listProdPrice).toString()
-                buttonBuyCardId2.setOnClickListener(object : View.OnClickListener {
-                            override fun onClick(view: View?) {
-                                onClickCardAction(secondProductCard.listProdId)
-                            }
-                })
-
-
+            val secondProductCard = dataSource[position+3]
+            val homeCardImgId2 = view.findViewById<ImageView>(R.id.homeCardImgId2)
+            val prodNameCardId2 = view.findViewById<TextView>(R.id.prodNameCardId2)
+            val prodPriceCardId2 = view.findViewById<TextView>(R.id.prodPriceCardId2)
+            val buttonBuyCardId2 = view.findViewById<Button>(R.id.buttonBuyCardId2)
+            homeCardImgId2.setImageDrawable(secondProductCard.listProdImg.drawable)
+            prodNameCardId2.text = secondProductCard.listProdName
+            val df1 = DecimalFormat("#.00")
+            prodPriceCardId2.text = "R$ " + df1.format(secondProductCard.listProdPrice).toString()
+            buttonBuyCardId2.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(view: View?) {
+                    onClickCardAction(secondProductCard.listProdId)
+                }
+            })
             container.addView(view)
             return view
         }

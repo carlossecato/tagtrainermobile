@@ -88,10 +88,10 @@ class CartActivity : AppCompatActivity() {
                     prodPrice.text = "R$ " +df.format(cartProducts.get(i).price).toString()
                     prodQuantity.text = cartProducts.get(i).quantity.toString()
                     totalValue.text = "R$ "+df.format(cartTotalPrice()).toString()
-                    if(cartProducts.get(i).quantity <=0) {
-                        table.removeView(tableRow)
-                        cartProducts.remove(cartProducts.get(i))
-                    }
+                        if(cartProducts.get(i).quantity <=0) {
+                            table.removeView(tableRow)
+                            cartProducts.remove(cartProducts.get(i))
+                        }
                 }
             })
 
