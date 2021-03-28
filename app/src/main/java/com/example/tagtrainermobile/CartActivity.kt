@@ -24,6 +24,7 @@ class CartActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_TagTrainerMobile)
         setContentView(R.layout.activity_cart)
         setTableForCartProducts()
         cartTotalPrice()

@@ -22,6 +22,10 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Thread.sleep(3000)
+
+        setTheme(R.style.Theme_TagTrainerMobile)
+
         setContentView(R.layout.activity_home)
         setListProducts()
         setHomeBanners()

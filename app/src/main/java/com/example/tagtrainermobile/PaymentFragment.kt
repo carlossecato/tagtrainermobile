@@ -30,7 +30,7 @@ class PaymentFragment : Fragment(), CartActivity.setRadioButtonsConfig {
     fun setProgressBar() {
         val progressBar = getView()?.findViewById<ProgressBar>(R.id.progressBar)
         if(user.isLogged) {
-            progressBar?.progress = 50
+            progressBar?.progress = 66
         } else {
             progressBar?.progress = 33
         }
