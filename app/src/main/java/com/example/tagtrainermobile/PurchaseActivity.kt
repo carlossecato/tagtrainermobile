@@ -1,5 +1,6 @@
 package com.example.tagtrainermobile
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ListView
 import android.widget.ProgressBar
@@ -59,6 +60,12 @@ class PurchaseActivity : AppCompatActivity() {
         val purchaseTable = findViewById<ListView>(R.id.diplayPurchaseId)
         val adapter = cartProductsAdapter(this, cartProducts)
             purchaseTable.adapter = adapter
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
     }
 
 }

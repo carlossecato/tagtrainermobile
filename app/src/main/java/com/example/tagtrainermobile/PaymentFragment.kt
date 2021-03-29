@@ -1,11 +1,13 @@
 package com.example.tagtrainermobile
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.ProgressBar
+import android.widget.RadioButton
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.tagtrainermobile.models.User
 import com.google.android.material.textfield.TextInputLayout
@@ -52,9 +54,11 @@ class PaymentFragment : Fragment(), CartActivity.setRadioButtonsConfig {
                             buttonFinish?.visibility = View.VISIBLE
 
                             buttonFinish?.setOnClickListener {
-                                val intent = Intent(context, PurchaseActivity::class.java)
-                                startActivity(intent)
-                                Toast.makeText(getActivity(), "oiioi", Toast.LENGTH_SHORT).show()
+                                val transactionFragment = TransactionFragment()
+                                getFragmentManager()?.beginTransaction()?.add(R.id.fragmentPaymentId, transactionFragment)?.commit()
+//                                val intent = Intent(context, PurchaseActivity::class.java)
+//                                startActivity(intent)
+//                                Toast.makeText(getActivity(), "oiioi", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
